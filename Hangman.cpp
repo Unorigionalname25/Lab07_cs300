@@ -15,7 +15,7 @@ bool playAnotherGame() {
 
 Hangman::Hangman() {
     numberOfGuesses = 0;
-    numberOfAllowedGuesses = 6; // You can change this to set your desired number of allowed guesses.
+    numberOfAllowedGuesses = 6;
     guessedLetters = "";
     initDictionary();
     setSecretWord();
@@ -23,7 +23,7 @@ Hangman::Hangman() {
 }
 
 void Hangman::initDictionary() {
-    std::ifstream file("dictionary.txt"); // You can change the file name.
+    std::ifstream file("dictionary.txt"); 
     std::string word;
 
     while (file >> word) {
@@ -89,7 +89,7 @@ void Hangman::play() {
 
         if (board == secretWord) {
             std::cout << "Congratulations! You've guessed the word: " << secretWord << "\n";
-            return;  // Add a return statement to exit the function
+            return; 
         }
     }
 
@@ -149,11 +149,11 @@ void evilHangman::playEvil() {
 
 void evilHangman::setSecretWord() {
     initDictionary();
-    int getArrayLength = words.size(); // Use words.size() to get the number of words.
+    int getArrayLength = words.size(); 
 
     for (int i = 0; i < getArrayLength; i++) {
-        if (words[i].length() == sizeOfWord) { // Check the length of each word.
-            wordlist.push_back(words[i]); // Use push_back to add words to wordlist.
+        if (words[i].length() == sizeOfWord) { 
+            wordlist.push_back(words[i]);
         }
     }
         if (wordlist.size()==1){
@@ -166,7 +166,7 @@ void evilHangman::setSecretWord() {
 void evilHangman::setsizeOfWord() {
         sizeOfWord = 0;
         std::cout << "Please input the size of word that you want: " << "\n";
-        std::cin >> sizeOfWord; // Use std::cin to read the input value.
+        std::cin >> sizeOfWord; 
 
 }
 void evilHangman::setGuesses(){
@@ -179,22 +179,18 @@ void evilHangman::partitionWords(char c) {
     std::map<std::string, std::vector<std::string>> wordFamilies;
     std::vector<std::string> updatedWordlist;
 
-    // Create word families based on the guessed letter
     for (const std::string& word : wordlist) {
-        std::string pattern = word; // Initialize with the word itself
+        std::string pattern = word; 
 
-        // Replace characters that are not equal to the guessed letter with placeholders
         for (char& letter : pattern) {
             if (letter != c) {
                 letter = '_';
             }
         }
 
-        // Add the word to the corresponding word family
         wordFamilies[pattern].push_back(word);
     }
 
-    // Select the largest word family
     std::string largestFamilyPattern;
     size_t largestFamilySize = 0;
 
@@ -205,19 +201,15 @@ void evilHangman::partitionWords(char c) {
         }
     }
 
-    // Create a set to store unique words from the largest family
     std::set<std::string> uniqueWords;
     for (const std::string& word : wordFamilies[largestFamilyPattern]) {
         uniqueWords.insert(word);
     }
 
-    // Update the wordlist with unique words from the largest family
     updatedWordlist.assign(uniqueWords.begin(), uniqueWords.end());
 
-    // Update the original wordlist with the updatedWordlist
     wordlist = updatedWordlist;
 
-    // Display the largest word family
     std::cout << "(Pattern: " << largestFamilyPattern << "):" <<"\n";
     for (const std::string& word : updatedWordlist) {
     }
